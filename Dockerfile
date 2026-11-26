@@ -24,3 +24,7 @@ RUN mkdir -p storage/framework/cache storage/framework/sessions storage/framewor
              storage/logs bootstrap/cache public/images \
     && composer dump-autoload --optimize --no-dev \
     && chown -R www-data:www-data storage bootstrap/cache public/images
+
+RUN a2dismod mpm_event mpm_worker || true \
+    && rm -f /etc/apache2/mods-enabled/mpm_event.* /etc/apache2/mods-enabled/mpm_worker.* \
+    && a2enmod mpm_prefork
